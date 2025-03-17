@@ -1,3 +1,10 @@
-TEAM LEADER: Semih Sarikoca
+# Descriptive Statistics Project
 
-COLLABORATOR: Isil Yagmur Karabulut
+## Team
+
+- **Team Leader:** Semih Sarikoca
+- **Collaborator:** Isil Yagmur Karabulut
+
+## Reports
+
+- [Report 1](Report1.md)
