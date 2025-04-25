@@ -1195,8 +1195,8 @@ print(mean1)
 print(median1) # 50/50 percent of data = middle point
 ```
 
-    10.05540588158761
-    9.997093453449489
+    10.043401096752241
+    10.01664288112819
 
 
 ### Modifying our plot
