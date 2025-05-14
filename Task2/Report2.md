@@ -2,8 +2,6 @@
 
 ## Handling Missing Values in Python
 
-
-
 ![Missing values](missing.png)
 
 Real world data is messy and often contains a lot of missing values. 
@@ -54,7 +52,7 @@ print(dirty_iris.head())
     2           6.2          NaN           5.4          2.3   virginica
     3           5.0          3.4           1.6          0.4      setosa
     4           5.7          2.6           3.5          1.0  versicolor
-    
+
 
 ## Introduce Missing Values
 
@@ -246,7 +244,7 @@ print(f"Percentage of complete cases: {percentage_complete:.2f}%")
 
     Number of complete cases: 96
     Percentage of complete cases: 64.00%
-    
+
 
 Does the data contain other special values? If it does, replace them with NA.
 
@@ -279,7 +277,7 @@ print(dirty_iris.describe(include='all'))
     50%         5.750000     3.000000      4.500000     1.300000         NaN
     75%         6.400000     3.300000      5.100000     1.800000         NaN
     max        73.000000    30.000000     63.000000     2.500000         NaN
-    
+
 
 ## Checking consistency
 
@@ -333,7 +331,7 @@ for rule, result in rules.items():
     Petal.Width > 0: False
     Petal.Length >= 2 * Petal.Width: False
     Sepal.Length > Petal.Length: False
-    
+
 
 Now we are ready to determine how often each rule is broken (violations). Also we can summarize and plot the result.
 
@@ -360,7 +358,7 @@ for rule, count in summary.items():
     Petal.Width > 0: 13 violations
     Petal.Length >= 2 * Petal.Width: 34 violations
     Sepal.Length > Petal.Length: 30 violations
-    
+
 
 What percentage of the data has no errors?
 
@@ -386,7 +384,7 @@ plt.show()
 
 
     
-![png](Exercise4_files/Exercise4_30_0.png)
+![png](Exercise%204_files/Exercise%204_29_0.png)
     
 
 
@@ -415,7 +413,7 @@ print(violated_rows)
     119           NaN          2.8          4.70          1.2  versicolor
     124          49.0         30.0         14.00          2.0      setosa
     137           NaN          3.0          4.90          1.8   virginica
-    
+
 
 Find outliers in sepal length using boxplot approach. Retrieve the corresponding observations and look at the other values. Any ideas what might have happened? Set the outliers to NA (or a value that you find more appropiate)
 
@@ -431,7 +429,7 @@ plt.show()
 
 
     
-![png](Exercise4_files/Exercise4_34_0.png)
+![png](Exercise%204_files/Exercise%204_33_0.png)
     
 
 
@@ -450,7 +448,7 @@ print(dirty_iris.loc[outliers_idx])
          Sepal.Length  Sepal.Width  Petal.Length  Petal.Width    Species
     27           73.0         29.0          63.0          NaN  virginica
     124          49.0         30.0          14.0          2.0     setosa
-    
+
 
 They all seem to be too big... may they were measured in mm i.o cm?
 
@@ -474,7 +472,7 @@ print(dirty_iris.describe())
     50%        5.700000     3.000000      4.400000     1.300000
     75%        6.400000     3.300000      5.100000     1.800000
     max        7.900000     4.200000     23.000000     2.500000
-    
+
 
 
 Note that simple boxplot shows an extra outlier!
@@ -492,7 +490,7 @@ plt.show()
 
 
     
-![png](Exercise4_files/Exercise4_39_0.png)
+![png](Exercise%204_files/Exercise%204_38_0.png)
     
 
 
@@ -528,7 +526,7 @@ print(mydata_corrected)
     149           5.8          2.6           4.0          NaN  versicolor
     
     [150 rows x 5 columns]
-    
+
 
 Replace all erroneous values with NA using (the result of) localizeErrors:
 
@@ -568,7 +566,7 @@ msno.matrix(dirty_iris);
 
 
     
-![png](Exercise4_files/Exercise4_47_0.png)
+![png](Exercise%204_files/Exercise%204_46_0.png)
     
 
 
@@ -586,7 +584,7 @@ msno.heatmap(dirty_iris);
 
 
     
-![png](Exercise4_files/Exercise4_49_0.png)
+![png](Exercise%204_files/Exercise%204_48_0.png)
     
 
 
@@ -606,7 +604,7 @@ msno.dendrogram(dirty_iris);
 
 
     
-![png](Exercise4_files/Exercise4_51_0.png)
+![png](Exercise%204_files/Exercise%204_50_0.png)
     
 
 
@@ -717,7 +715,7 @@ print(final_imputed_data)
     149      5.800000     2.600000      3.833333     1.066667  versicolor
     
     [150 rows x 5 columns]
-    
+
 
 ## Transformations
 
@@ -753,7 +751,7 @@ plt.show()
 
 
     
-![png](Exercise4_files/Exercise4_59_0.png)
+![png](Exercise%204_files/Exercise%204_58_0.png)
     
 
 
@@ -796,7 +794,7 @@ print(df_clean['Income_binned'])
     399            Low (Q1)
     Name: Income_binned, Length: 380, dtype: category
     Categories (4, object): ['Low (Q1)' < 'Medium-Low (Q2)' < 'Medium-High (Q3)' < 'High (Q4)']
-    
+
 
 **Exercise 4.** Recode the original distribution of incomes using fixed length of intervals and assign them labels.
 
@@ -832,7 +830,7 @@ print(df_clean['Income_binned'].value_counts().sort_index())
     Medium-High    103
     High            74
     Name: count, dtype: int64
-    
+
 
 In case of statistical modeling (i.e. credit scoring purposes) - we need to be aware of the fact, that the ***optimal*** discretization of the original distribution must be achieved. The '*binning_by*' function comes with some help here.
 
@@ -1529,7 +1527,7 @@ binning_table.plot(metric="woe")
 
 
     
-![png](Exercise4_files/Exercise4_85_0.png)
+![png](Exercise%204_files/Exercise%204_84_0.png)
     
 
 
@@ -1540,7 +1538,7 @@ binning_table.plot(metric="event_rate")
 
 
     
-![png](Exercise4_files/Exercise4_86_0.png)
+![png](Exercise%204_files/Exercise%204_85_0.png)
     
 
 
@@ -1601,7 +1599,7 @@ for rule, result in carseats_rules.items():
     Age >= 0 and Age <= 100: True
     Urban in ['Yes', 'No']: False
     US in ['Yes', 'No']: True
-    
+
 
 
 ```python
@@ -1621,7 +1619,7 @@ for rule, count in violations_summary.items():
     Age >= 0 and Age <= 100: 0 violations
     Urban in ['Yes', 'No']: 10 violations
     US in ['Yes', 'No']: 0 violations
-    
+
 
 
 ```python
@@ -1644,7 +1642,7 @@ plt.show()
 
 
     
-![png](Exercise4_files/Exercise4_94_0.png)
+![png](Exercise%204_files/Exercise%204_93_0.png)
     
 
 
@@ -1666,19 +1664,19 @@ plt.show()
 
 
     
-![png](Exercise4_files/Exercise4_95_0.png)
+![png](Exercise%204_files/Exercise%204_94_0.png)
     
 
 
 
     
-![png](Exercise4_files/Exercise4_95_1.png)
+![png](Exercise%204_files/Exercise%204_94_1.png)
     
 
 
 
     
-![png](Exercise4_files/Exercise4_95_2.png)
+![png](Exercise%204_files/Exercise%204_94_2.png)
     
 
 
@@ -1733,7 +1731,7 @@ print(carseats_cleaned.head())
     2    Medium   Yes  Yes  
     3    Medium   Yes  Yes  
     4       Bad   Yes   No  
-    
+
 
 
 ```python
@@ -1749,49 +1747,49 @@ for col in numeric_cols:
 
 
     
-![png](Exercise4_files/Exercise4_97_0.png)
+![png](Exercise%204_files/Exercise%204_96_0.png)
     
 
 
 
     
-![png](Exercise4_files/Exercise4_97_1.png)
+![png](Exercise%204_files/Exercise%204_96_1.png)
     
 
 
 
     
-![png](Exercise4_files/Exercise4_97_2.png)
+![png](Exercise%204_files/Exercise%204_96_2.png)
     
 
 
 
     
-![png](Exercise4_files/Exercise4_97_3.png)
+![png](Exercise%204_files/Exercise%204_96_3.png)
     
 
 
 
     
-![png](Exercise4_files/Exercise4_97_4.png)
+![png](Exercise%204_files/Exercise%204_96_4.png)
     
 
 
 
     
-![png](Exercise4_files/Exercise4_97_5.png)
+![png](Exercise%204_files/Exercise%204_96_5.png)
     
 
 
 
     
-![png](Exercise4_files/Exercise4_97_6.png)
+![png](Exercise%204_files/Exercise%204_96_6.png)
     
 
 
 
     
-![png](Exercise4_files/Exercise4_97_7.png)
+![png](Exercise%204_files/Exercise%204_96_7.png)
     
 
 
@@ -1847,7 +1845,7 @@ carseats_cleaned = cleanse_urban_field(carseats_cleaned)
     Missing values in 'Urban' before cleansing: 10
     Missing values in 'Urban' after cleansing: 0
     Unique values in 'Urban' after cleansing: ['Yes' 'No']
-    
+
 
 
 ```python
@@ -1868,7 +1866,7 @@ for rule, count in violations_summary.items():
     Age >= 0 and Age <= 100: 0 violations
     Urban in ['Yes', 'No']: 0 violations
     US in ['Yes', 'No']: 0 violations
-    
+
 
 
 ```python
@@ -1885,18 +1883,18 @@ plt.show()
 
 
     
-![png](Exercise4_files/Exercise4_101_0.png)
+![png](Exercise%204_files/Exercise%204_100_0.png)
     
 
 
 
     
-![png](Exercise4_files/Exercise4_101_1.png)
+![png](Exercise%204_files/Exercise%204_100_1.png)
     
 
 
 
     
-![png](Exercise4_files/Exercise4_101_2.png)
+![png](Exercise%204_files/Exercise%204_100_2.png)
     
 
