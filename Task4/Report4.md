@@ -786,7 +786,7 @@ print(f"P95 (95%): {p95}")
 ```python
 # Create boxplot
 fig, ax = plt.subplots(figsize=(8, 6))
-sns.violinplot(data=mydata, ax=ax, color='lightblue', width=0.3)
+sns.boxplot(data=mydata, ax=ax, color='lightblue', width=0.3)
 
 # Calculate statistics
 minimum = np.min(mydata)
@@ -828,6 +828,46 @@ Try to change the boxplot into the violin plot (or add it).
 
 Looking at the aforementioned quantile results and the box plot, try to interpret these measures. 
 
+
+```python
+# Create violin plot
+fig, ax = plt.subplots(figsize=(8, 6))
+sns.violinplot(data=mydata, ax=ax, color='lightblue', width=0.3)
+
+# Calculate statistics
+minimum = np.min(mydata)
+q1 = np.percentile(mydata, 25)
+median = np.median(mydata)
+q3 = np.percentile(mydata, 75)
+maximum = np.max(mydata)
+mean = np.mean(mydata)
+
+ax.scatter(0, minimum, color='red', label='Min', zorder=5)
+ax.scatter(0, q1, color='orange', label='Q1 (25th percentile)', zorder=5)
+ax.scatter(0, median, color='green', label='Median (50th percentile)', zorder=5)
+ax.scatter(0, q3, color='purple', label='Q3 (75th percentile)', zorder=5)
+ax.scatter(0, maximum, color='brown', label='Max', zorder=5)
+ax.scatter(0, mean, color='black', marker='D', s=60, label='Mean', zorder=5)
+
+for value, name, color in zip(
+    [minimum, q1, median, mean, q3, maximum],
+    ['Min', 'Q1', 'Median', 'Mean', 'Q3', 'Max'],
+    ['red', 'orange', 'green', 'black', 'purple', 'brown']
+):
+    ax.text(0.1, value, f'{name}: {value:.2f}', verticalalignment='center', color=color)
+
+
+ax.set_title('Boxplot of mydata with All Measures Marked')
+ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.show()
+```
+
+
+    
+![png](Exercise8_files/Exercise8_55_0.png)
+    
+
+
 ## Variability
 
 > **Variability** (or **dispersion**) refers to the degree to which values in a distribution are *dispersed*, i.e., differ from each other.
@@ -853,7 +893,7 @@ axes[1].set_title("Higher variance");
 
 
     
-![png](Exercise8_files/Exercise8_57_0.png)
+![png](Exercise8_files/Exercise8_58_0.png)
     
 
 
@@ -879,7 +919,7 @@ d1.max() - d1.min()
 
 
 
-    np.float64(6.478645890748602)
+    np.float64(6.699407589039033)
 
 
 
@@ -891,7 +931,7 @@ d2.max() - d2.min()
 
 
 
-    np.float64(27.74135565039261)
+    np.float64(34.187205023320146)
 
 
 
@@ -916,7 +956,7 @@ q3 - q1
 
 
 
-    np.float64(1.2519878907327113)
+    np.float64(1.3666644747243302)
 
 
 
@@ -930,7 +970,7 @@ q3 - q1
 
 
 
-    np.float64(6.942051408728109)
+    np.float64(6.935318976308852)
 
 
 
@@ -1012,7 +1052,7 @@ d1.std()
 
 
 
-    np.float64(0.9586879460393224)
+    np.float64(1.0332935499506553)
 
 
 
@@ -1025,7 +1065,7 @@ d1.std(ddof = 1)
 
 
 
-    np.float64(0.9591676498201742)
+    np.float64(1.0338105845338987)
 
 
 
@@ -1060,6 +1100,31 @@ print(f"CV (scipy): {cv_sample:.2f}%")
     Sample variance (scipy): 4.571428571428571
     Sample sd (scipy): 2.138089935299395
     CV (scipy): 42.76%
+
+
+
+```python
+# Calculate the Coefficient of Variation (CV) for Legendary and Non-Legendary Pokémon
+
+# Filter numerical columns
+numerical_columns = df_pokemon.select_dtypes(include='number')
+
+# Group by 'Legendary' and calculate mean and standard deviation
+grouped_stats = numerical_columns.groupby(df_pokemon['Legendary']).agg(['mean', 'std'])
+
+# Calculate CV (Coefficient of Variation) as (std / mean) * 100
+grouped_stats['CV'] = (grouped_stats['Attack']['std'] / grouped_stats['Attack']['mean']) * 100
+
+# Display the CV for Legendary and Non-Legendary Pokémon
+print("Coefficient of Variation (CV) for Legendary and Non-Legendary Pokémon:")
+print(grouped_stats['CV'])
+```
+
+    Coefficient of Variation (CV) for Legendary and Non-Legendary Pokémon:
+    Legendary
+    False    40.293907
+    True     26.010317
+    Name: CV, dtype: float64
 
 
 ## Measures of the shape of the distribution
@@ -1136,16 +1201,65 @@ print(f"Skewness of X: {skewness:.4f}")
 
 Try to interpret the above-mentioned result and calculate example slant ratios for several groups of Pokémon.
 
+### The skewness result indicates the asymmetry of the data distribution.
+
+#### Positive Skewness: If a Pokémon type has a positive skewness, it means that most Pokémon in this group have lower attack values, but there are a few with very high attack values (long tail on the right).
+
+#### Negative Skewness: If a Pokémon type has a negative skewness, it means that most Pokémon in this group have higher attack values, but there are a few with very low attack values (long tail on the left).
+
+#### Near Zero Skewness: If the skewness is close to zero, the attack values for this Pokémon type are symmetrically distributed.
+
+
+##### For example, we can calculate the skewness for Pokémon groups based on their 'Attack' or 'HP' stats. This will help us understand whether certain Pokémon types have a tendency for higher or lower values in these attributes.
+
 
 ```python
-# The skewness result indicates the asymmetry of the data distribution.
-# A positive skewness value suggests that the data has a longer tail on the right side (right-skewed).
-# A negative skewness value suggests a longer tail on the left side (left-skewed).
-# A skewness value close to 0 indicates a symmetric distribution.
+# Group Pokémon by 'Type 1' and calculate skewness for 'Attack'
+attack_skewness = df_pokemon.groupby('Type 1')['Attack'].apply(skew)
 
-# For example, we can calculate the skewness for Pokémon groups based on their 'Attack' or 'HP' stats.
-# This will help us understand whether certain Pokémon types have a tendency for higher or lower values in these attributes.
+# Display skewness for each Pokémon type
+print("Skewness of 'Attack' for each Pokémon type:")
+print(attack_skewness)
+
+# Plot skewness
+plt.figure(figsize=(12, 6))
+attack_skewness.plot(kind='bar', color='skyblue')
+plt.title("Skewness of 'Attack' for each Pokémon type")
+plt.xlabel("Pokémon Type")
+plt.ylabel("Skewness")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
 ```
+
+    Skewness of 'Attack' for each Pokémon type:
+    Type 1
+    Bug         0.797914
+    Dark        0.538188
+    Dragon      0.189216
+    Electric    0.600140
+    Fairy       0.959808
+    Fighting   -0.403065
+    Fire        0.340286
+    Flying     -0.432799
+    Ghost       0.871959
+    Grass       0.159399
+    Ground      0.571162
+    Ice         0.593358
+    Normal      0.362852
+    Poison     -0.005004
+    Psychic     1.128261
+    Rock        0.247232
+    Steel       0.053388
+    Water       0.439261
+    Name: Attack, dtype: float64
+
+
+
+    
+![png](Exercise8_files/Exercise8_85_1.png)
+    
+
 
 ### Interquartile Skewness
 
